@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.item.eshop.mapper.ReportMapper" >
+  <resultMap id="BaseResultMap" type="com.item.eshop.model.Status" >
+    <result column="status" property="status" jdbcType="INTEGER" />
+    <result column="num" property="num" jdbcType="INTEGER" />
+  </resultMap>
+  <!--用户数量查询-->
+  <select id="countUser" resultType="java.lang.Integer">
+    select 
+      count(*)
+    from user
+  </select>
+  <select id="countUserByStatus" resultMap="BaseResultMap">
+    select
+    valid AS status,count(*) AS num
+    from debt
+    GROUP BY valid
+  </select>
+  <!--订单数量查询-->
+  <select id="countOrder" resultType="java.lang.Integer">
+    select
+    count(*)
+    from trade
+  </select>
+  <select id="countOrderByStatus" resultMap="BaseResultMap">
+    select
+    status,count(*) AS num
+    from trade
+    GROUP BY status
+  </select>
+  <!--商品数量查询-->
+  <select id="countGood" resultType="java.lang.Integer">
+    select
+    count(*)
+    from good
+  </select>
+  <select id="countGoodByStatus" resultMap="BaseResultMap">
+    select
+    status,count(*) AS num
+    from good
+    GROUP BY status
+  </select>
+  <select id="countAmountSum" resultType="java.lang.Double">
+    SELECT
+    sum(fact_amount)
+    from trade
+    WHERE find_in_set(status,'2,3,4')
+  </select>
+</mapper>

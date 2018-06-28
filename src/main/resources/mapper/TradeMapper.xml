@@ -1,0 +1,256 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.item.eshop.mapper.TradeMapper">
+    <resultMap id="BaseResultMap" type="com.item.eshop.model.Trade">
+        <id column="id" property="id" jdbcType="VARCHAR"/>
+        <result column="starttime" property="starttime" jdbcType="TIMESTAMP"/>
+        <result column="amount" property="amount" jdbcType="DECIMAL"/>
+        <result column="trade_good" property="tradeGood" jdbcType="VARCHAR"/>
+        <result column="fact_amount" property="factAmount" jdbcType="DECIMAL"/>
+        <result column="coupon_id" property="couponId" jdbcType="VARCHAR"/>
+        <result column="user_id" property="userId" jdbcType="INTEGER"/>
+        <result column="pay_type" property="pay_type" jdbcType="INTEGER"/>
+        <result column="address_id" property="addressId" jdbcType="INTEGER"/>
+        <result column="status" property="status" jdbcType="INTEGER"/>
+        <result column="endtime" property="endtime" jdbcType="TIMESTAMP"/>
+        <result column="address" property="address" jdbcType="VARCHAR"/>
+        <result column="content" property="content" jdbcType="VARCHAR"/>
+        <result column="image" property="image" jdbcType="VARCHAR"/>
+        <result column="pay_trade_no" property="pay_trade_no" jdbcType="VARCHAR"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+    id, starttime, amount, trade_good, fact_amount, coupon_id, user_id, pay_type, address_id,
+    status, endtime,address,content,image,pay_trade_no
+  </sql>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String">
+        select
+        <include refid="Base_Column_List"/>
+        from trade
+        where id = #{id,jdbcType=VARCHAR}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from trade
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+    <insert id="insert" parameterType="com.item.eshop.model.Trade">
+    insert into trade (id, starttime, amount, 
+      trade_good, fact_amount, coupon_id,
+      user_id, pay_type, address_id, 
+      status, endtime,address,content,image,pay_trade_no)
+    values (#{id,jdbcType=VARCHAR}, #{starttime,jdbcType=TIMESTAMP}, #{amount,jdbcType=DECIMAL}, 
+      #{tradeGood,jdbcType=VARCHAR}, #{factAmount,jdbcType=DECIMAL}, #{couponId,jdbcType=VARCHAR},
+      #{userId,jdbcType=INTEGER}, #{pay_type,jdbcType=INTEGER}, #{addressId,jdbcType=INTEGER}, 
+      #{status,jdbcType=INTEGER}, #{endtime,jdbcType=TIMESTAMP},#{address,jdbcType=VARCHAR},
+      #{content,jdbcType=VARCHAR},#{image,jdbcType=VARCHAR},#{pay_trade_no,jdbcType=VARCHAR})
+  </insert>
+    <insert id="insertSelective" parameterType="com.item.eshop.model.Trade">
+        insert into trade
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="starttime != null">
+                starttime,
+            </if>
+            <if test="amount != null">
+                amount,
+            </if>
+            <if test="tradeGood != null">
+                trade_good,
+            </if>
+            <if test="factAmount != null">
+                fact_amount,
+            </if>
+            <if test="couponId != null">
+                coupon_id,
+            </if>
+            <if test="userId != null">
+                user_id,
+            </if>
+            <if test="pay_type != null">
+                pay_type,
+            </if>
+            <if test="addressId != null">
+                address_id,
+            </if>
+            <if test="status != null">
+                status,
+            </if>
+            <if test="endtime != null">
+                endtime,
+            </if>
+            <if test=" address != null">
+                address,
+            </if>
+            <if test=" content != null">
+                content,
+            </if>
+            <if test=" image != null">
+                image,
+            </if>
+            <if test=" pay_trade_no != null">
+                pay_trade_no,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=VARCHAR},
+            </if>
+            <if test="starttime != null">
+                #{starttime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="amount != null">
+                #{amount,jdbcType=DECIMAL},
+            </if>
+            <if test="tradeGood != null">
+                #{tradeGood,jdbcType=VARCHAR},
+            </if>
+            <if test="factAmount != null">
+                #{factAmount,jdbcType=DECIMAL},
+            </if>
+            <if test="couponId != null">
+                #{couponId,jdbcType=VARCHAR},
+            </if>
+            <if test="userId != null">
+                #{userId,jdbcType=INTEGER},
+            </if>
+            <if test="pay_type != null">
+                #{pay_type,jdbcType=INTEGER},
+            </if>
+            <if test="addressId != null">
+                #{addressId,jdbcType=INTEGER},
+            </if>
+            <if test="status != null">
+                #{status,jdbcType=INTEGER},
+            </if>
+            <if test="endtime != null">
+                #{endtime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="address != null">
+                #{address,jdbcType=VARCHAR},
+            </if>
+            <if test="content != null">
+                #{content,jdbcType=VARCHAR},
+            </if>
+            <if test="image != null">
+                #{image,jdbcType=VARCHAR},
+            </if>
+            <if test="pay_trade_no != null">
+                #{pay_trade_no,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.item.eshop.model.Trade">
+        update trade
+        <set>
+            <if test="starttime != null">
+                starttime = #{starttime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="amount != null">
+                amount = #{amount,jdbcType=DECIMAL},
+            </if>
+            <if test="tradeGood != null">
+                trade_good = #{tradeGood,jdbcType=VARCHAR},
+            </if>
+            <if test="factAmount != null">
+                fact_amount = #{factAmount,jdbcType=DECIMAL},
+            </if>
+            <if test="couponId != null">
+                coupon_id = #{couponId,jdbcType=VARCHAR},
+            </if>
+            <if test="userId != null">
+                user_id = #{userId,jdbcType=INTEGER},
+            </if>
+            <if test="pay_type != null">
+                pay_type = #{pay_type,jdbcType=INTEGER},
+            </if>
+            <if test="addressId != null">
+                address_id = #{addressId,jdbcType=INTEGER},
+            </if>
+            <if test="status != null">
+                status = #{status,jdbcType=INTEGER},
+            </if>
+            <if test="endtime != null">
+                endtime = #{endtime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="address != null">
+                address = #{address,jdbcType=VARCHAR},
+            </if>
+            <if test="content != null">
+                content = #{content,jdbcType=VARCHAR},
+            </if>
+            <if test="image != null">
+                image = #{image,jdbcType=VARCHAR},
+            </if>
+            <if test="pay_trade_no != null">
+                pay_trade_no = #{pay_trade_no,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where id = #{id,jdbcType=VARCHAR}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.item.eshop.model.Trade">
+    update trade
+    set starttime = #{starttime,jdbcType=TIMESTAMP},
+      amount = #{amount,jdbcType=DECIMAL},
+      trade_good = #{tradeGood,jdbcType=VARCHAR},
+      fact_amount = #{factAmount,jdbcType=DECIMAL},
+      coupon_id = #{couponId,jdbcType=VARCHAR},
+      user_id = #{userId,jdbcType=INTEGER},
+      pay_type = #{pay_type,jdbcType=INTEGER},
+      address_id = #{addressId,jdbcType=INTEGER},
+      status = #{status,jdbcType=INTEGER},
+      endtime = #{endtime,jdbcType=TIMESTAMP},
+      address = #{address,jdbcType=VARCHAR},
+      content = #{content,jdbcType=VARCHAR},
+      image = #{image,jdbcType=VARCHAR},
+      pay_trade_no = #{pay_trade_no,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+    <select id="selectByStatus" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+        select
+        <include refid="Base_Column_List"/>
+        from trade
+        where status=#{param1} ORDER BY starttime ASC LIMIT #{param2},#{param3}
+    </select>
+    <!-- add 2018-4-21 -->
+    <select id="selectByUserAndStatus" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+        select
+        <include refid="Base_Column_List"/>
+        from trade
+        where user_id=#{param1} AND status=#{param2} ORDER BY starttime ASC LIMIT #{param3},#{param4}
+    </select>
+    <select id="selectByIdAndUserId" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from trade
+        where id=#{param1} AND user_id=#{param2}
+    </select>
+    <select id="selectBySet" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from trade
+        where user_id=#{param1} AND find_in_set(status,#{param2}) ORDER BY starttime ASC
+    </select>
+    <select id="selectMore" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+        select
+        <include refid="Base_Column_List"/>
+        from trade
+        ORDER BY starttime ASC
+        LIMIT #{param1},#{param2}
+    </select>
+    <select id="selectBySets" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from trade
+        where find_in_set(status,#{param1}) ORDER BY starttime ASC LIMIT #{param2},#{param3}
+    </select>
+    <update  id="updateTradeSuccess">
+        UPDATE trade SET
+        status=4 WHERE status=3
+    </update>
+    <update id="updateByIdAndStatusOne" parameterType="java.lang.String">
+      UPDATE trade SET
+      status=0
+      WHERE id=#{param1} AND status=1
+    </update>
+</mapper>

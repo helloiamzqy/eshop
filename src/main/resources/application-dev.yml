@@ -1,0 +1,19 @@
+spring:
+    datasource:
+        name: eshop
+        url: jdbc:mysql://47.106.118.67:3306/eshop?allowMultiQueries=true&amp;autoReconnect=true
+        username: admin
+        password: dong838375536
+
+constant:
+  path: /opt/tomcat/webapps/images/public/
+  url: /images
+
+
+spring:
+  thymeleaf:
+      prefix: classpath:/static/
+
+mybatis:
+    mapper-locations: classpath:mapper/*.xml
+    type-aliases-package: com.item.eshop.model

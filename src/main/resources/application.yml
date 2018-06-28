@@ -1,0 +1,78 @@
+server:
+  port: 8080
+  servlet:
+    context-path: /
+
+spring:
+    datasource:
+        name: eshop_test
+#        url: jdbc:mysql://localhost:3306/eshop?allowMultiQueries=true&amp;autoReconnect=true
+#        username: root
+#        password: dong838375536.
+        url: jdbc:mysql://47.106.118.67:3306/eshop_test?allowMultiQueries=true&amp;autoReconnect=true
+        username: admin
+        password: dong838375536.
+    thymeleaf:
+      prefix: classpath:/static
+
+
+mybatis:
+  mapper-locations: classpath:mapper/*.xml
+  type-aliases-package: com.item.eshop.model
+
+constant:
+#  path: C:\Users\Administrator\Desktop\eshop\opensource\eshop_6.0\src\main\resources\static\public\
+#  url: /
+  path: /opt/tomcat/image
+  url: /image
+  ip: localhost
+  passwd: dong838375536.
+
+  ali_app_id:  2018041960009204
+  ali_url: http://47.106.118.67:8080/trade/alipay
+  ali_app_primary_key: MIIEvwIBADANBgkqhkiG9w0BAQEFAASCBKkwggSlAgEAAoIBAQCRy+KzwGOTxPn5
+                       XENyDHFaSTkmx0IJx2UUBGABRlBjvx9oRFvWMLu3uRY/4HV/Vqt3k1GU8PEjn1g8
+                       9SxJQQbxZVulR7cOKRpoeWcOTqgL38EAlgmBlYBy45WZ3Gh3AQgzzVvLxAxf0F0F
+                       HTaU5SRawXQpVQGlGFDMb23ZEZ4iSgXbs9a2z5A7uNbE9GHErP1NoH/hc1epjg/b
+                       fH0/0eC/Xy/00oTNhMAJztrN4FDBuF8F7VUpo3IvT57guKFSgR/VJNtrtXtOyzun
+                       10QqNt0v1Ahw/bUQB1xMs1SZ7VmG7J3s4/wp46lMzTNkuPKJQILTeE/f2KAVbpuQ
+                       06lPEDqNAgMBAAECggEBAI2+z3U7ApTT2MRasyfaeQnyTqIo70damCbR6hTTK60O
+                       T5arfy3Ky3ZfeAY6T4Gx3Zqvm41WgtrDPKJnKts9YWanyGX0R0B5LbeM8Gi0iCSj
+                       MZ1EQZG+q9cG9JdV9ipc0oCqkyiUPgOZLBagxEQWUzX5Btp4TtUXwtY/L2ju+/MQ
+                       1ODKYxwTRvSZginf0l6gNlj3ksoqbLdwgdr0Zk4aXNNoTdaxbCsUnmaaRn+3pGPh
+                       o4Gy1REGTUyIHhdnwcuLGPlmqIROrn9GRDyYZi4A97dQrIF+7Y61oUDT7EJvTbDn
+                       5o1VC+uNTn3masr8DkSXN164P+b8msUnz/PcsE50ToECgYEAwYJWSUbPRJm38DRJ
+                       Y5zrvdOkZc16syuxXVfkwd18Sf+xrZu7Wyv9NKFGwgzzTWkzeKpFfrAo84149DWm
+                       9u+/Ao+8htbv6jx+U7igmGFkV1EoqWvtAB2YDJ2ZdPYoKiyuJUJXbgHyDxw2bE11
+                       bIVXVsBx2jQLP/qQ+mashKPU8akCgYEAwOETGC/2o/YWN1eO/t5hAk3o1VWBVWWv
+                       mJO8Pa4n93mR9TrUxs5yFVoAHORav2HQ98QT38fHze7IRbXMFohQNv/R+bvw1eGJ
+                       dvUoSsjPSSKZ7zwtE5WcMteYl3AaTFQIuyX2WQWYLFySkHFZHknUxx9itux4n9IV
+                       nhiqLAhxWEUCgYBjjV4+zIMNU9fhZ8Tpzm0pd5x4E0IwsyXIU9OIOR4cI8ORATFe
+                       Mj9NuDri0i7JgHnOdirShmZLBllXqdJ/789gzfm7lRBQfVawU6erPU+V7Fby8mc3
+                       TAJRWzL7jTgUmm/tEzhPjAiv5V/KT/89GUxZgSARlfzDqXC0oeXXR0HiIQKBgQC2
+                       GIh/cGDpgR6OVyLQqsBpfYaRSm2VYzA521h/3xkqgmLzY/yYSTXZxKOQo2KthrrU
+                       ABFHV4TifkojzjQFHeKlWjYyEWaZdpnibigBGr7gbENqYqSn9bqHIZaVeqfJYhjw
+                       HzIJ78cwMqHIrsqVVt0EtTPsQSrMsHnqTZzzf3ELBQKBgQC2q3S9VP9MG0pFeN41
+                       aC+mhZ7V+nVBAKwzKOSgbmHbW20c8/E6IMP/6/VEE5oG8QGQLjQBIh7fd8JrYP3n
+                       H6/YU2ALAwG0VBfXnXlmC5EZ2RMO8EDyiL00ZNlTCs7aK4/I7RQ4QjrOdwa4yrv2
+                       Mx9m31Ju/szJ2j8ZlFe055jKxQ==
+  ali_charset: utf-8
+  ali_pay_public_key: MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAkcvis8Bjk8T5+VxDcgxxWkk5JsdCCcdlFARgAUZQY78faERb1jC7t7kWP+B1f1ard5NRlPDxI59YPPUsSUEG8WVbpUe3DikaaHlnDk6oC9/BAJYJgZWAcuOVmdxodwEIM81by8QMX9BdBR02lOUkWsF0KVUBpRhQzG9t2RGeIkoF27PWts+QO7jWxPRhxKz9TaB/4XNXqY4P23x9P9Hgv18v9NKEzYTACc7azeBQwbhfBe1VKaNyL0+e4LihUoEf1STba7V7Tss7p9dEKjbdL9QIcP21EAdcTLNUme1Zhuyd7OP8KeOpTM0zZLjyiUCC03hP39igFW6bkNOpTxA6jQIDAQAB
+  ali_pay_common_public_key: MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEApdsv2FcyT0KwQaxrrK+6NKEXJ10AOXsarh9JHQ4L7V/wtQO2zvnWnXlmtNmH7OlGxHocJYjPzjvHsjIS26DRHYxa8f6Qc/e/Y0nboCmiLVKHqWRRTpG4nPcoj0qdjWBYWPUDPus8V8hW16aRVrpb9J2HEBijdTscEYLDq43cZG/FLAsDS5qDJFKsETd04KnzqOvZBo1DDKQ8QOHPkHGS7lp+ESG9Ug6L5jAnp7gLxTWtVshOUwY/0TLSIVxkUK9GH/X4yBfI+IpBVPGUN3Di6o89CAQVYoyuCvMEiHSeyhKiVD6y34G8nJZtMQ9zwUO5PqK0wynVYIbgpzUdxVioUQIDAQAB
+#  weixin_url: https://api.mch.weixin.qq.com/pay/unifiedorder         #微信支付链接
+#  weixin_app_id: C74841886       #微信公众号ID
+#  weixin_mch_id: ece8d9e0a140c73bcc05f9d07dc14d8f       #商户号
+#  weixin_body:  靖军的店-商品购买     #商品简单描述 （应用市场上的APP名字-商品概述）
+#  weixin_trade_type: APP  #交易类型 APP
+#  weixin_notify_url: http://47.106.118.67:8080/trade/weixinpay     #通知地址
+
+wechat:
+  pay:
+    appId: wx63d3930c171e366e
+    mchId: 1502856731
+    mchKey: Wujinjun12345678Wujinjun12345678
+    keyPath: /opt/tomcat/webapps/apiclient_cert.p12
+
+
+
+

@@ -1,0 +1,243 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.item.eshop.mapper.GoodMapper" >
+  <resultMap id="BaseResultMap" type="com.item.eshop.model.Good" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="introduce" property="introduce" jdbcType="VARCHAR" />
+    <result column="image" property="image" jdbcType="VARCHAR" />
+    <result column="content" property="content" jdbcType="VARCHAR" />
+    <result column="span_size" property="spanSize" jdbcType="INTEGER" />
+    <result column="likes" property="likes" jdbcType="INTEGER" />
+    <result column="price" property="price" jdbcType="DECIMAL" />
+    <result column="counts" property="counts" jdbcType="INTEGER" />
+    <result column="category" property="category" jdbcType="INTEGER" />
+    <result column="status" property="status" jdbcType="INTEGER" />
+    <result column="other" property="other" jdbcType="VARCHAR" />
+    <result column="sale_volume" property="sale_volume" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, name, introduce, image, content, span_size, likes, price, counts, category, status,other,sale_volume
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from good
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from good
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.item.eshop.model.Good" >
+    insert into good (id, name, introduce, 
+      image, content, span_size, 
+      likes, price, counts,
+      category, status,other,sale_volume)
+    values (#{id,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{introduce,jdbcType=VARCHAR}, 
+      #{image,jdbcType=VARCHAR}, #{content,jdbcType=VARCHAR}, #{spanSize,jdbcType=INTEGER}, 
+      #{likes,jdbcType=INTEGER}, #{price,jdbcType=DECIMAL}, #{counts,jdbcType=INTEGER},
+      #{category,jdbcType=INTEGER},#{status,jdbcType=INTEGER}, #{other,jdbcType=VARCHAR},#{sale_volume,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.item.eshop.model.Good" >
+    insert into good
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="name != null" >
+        name,
+      </if>
+      <if test="introduce != null" >
+        introduce,
+      </if>
+      <if test="image != null" >
+        image,
+      </if>
+      <if test="content != null" >
+        content,
+      </if>
+      <if test="spanSize != null" >
+        span_size,
+      </if>
+      <if test="likes != null" >
+        likes,
+      </if>
+      <if test="price != null" >
+        price,
+      </if>
+      <if test="counts != null" >
+        counts,
+      </if>
+      <if test="category != null" >
+        category,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+      <if test="other != null" >
+        other,
+      </if>
+      <if test="sale_volume != null" >
+        sale_volume,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="name != null" >
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="introduce != null" >
+        #{introduce,jdbcType=VARCHAR},
+      </if>
+      <if test="image != null" >
+        #{image,jdbcType=VARCHAR},
+      </if>
+      <if test="content != null" >
+        #{content,jdbcType=VARCHAR},
+      </if>
+      <if test="spanSize != null" >
+        #{spanSize,jdbcType=INTEGER},
+      </if>
+      <if test="likes != null" >
+        #{likes,jdbcType=INTEGER},
+      </if>
+      <if test="price != null" >
+        #{price,jdbcType=DECIMAL},
+      </if>
+      <if test="counts != null" >
+        #{counts,jdbcType=INTEGER},
+      </if>
+      <if test="category != null" >
+        #{category,jdbcType=INTEGER},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=INTEGER},
+      </if>
+      <if test="other != null" >
+        #{other,jdbcType=VARCHAR},
+      </if>
+      <if test="sale_volume != null" >
+        #{sale_volume,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.item.eshop.model.Good" >
+    update good
+    <set >
+      <if test="name != null" >
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="introduce != null" >
+        introduce = #{introduce,jdbcType=VARCHAR},
+      </if>
+      <if test="image != null" >
+        image = #{image,jdbcType=VARCHAR},
+      </if>
+      <if test="content != null" >
+        content = #{content,jdbcType=VARCHAR},
+      </if>
+      <if test="spanSize != null" >
+        span_size = #{spanSize,jdbcType=INTEGER},
+      </if>
+      <if test="likes != null" >
+        likes = #{likes,jdbcType=INTEGER},
+      </if>
+      <if test="price != null" >
+        price = #{price,jdbcType=DECIMAL},
+      </if>
+      <if test="counts != null" >
+        counts = #{counts,jdbcType=INTEGER},
+      </if>
+      <if test="category != null" >
+        category = #{category,jdbcType=INTEGER},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=INTEGER},
+      </if>
+      <if test="other != null" >
+        other = #{other,jdbcType=VARCHAR},
+      </if>
+      <if test="sale_volume != null" >
+        sale_volume = #{sale_volume,jdbcType=INTEGER},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.item.eshop.model.Good" >
+    update good
+    set name = #{name,jdbcType=VARCHAR},
+      introduce = #{introduce,jdbcType=VARCHAR},
+      image = #{image,jdbcType=VARCHAR},
+      content = #{content,jdbcType=VARCHAR},
+      span_size = #{spanSize,jdbcType=INTEGER},
+      likes = #{likes,jdbcType=INTEGER},
+      price = #{price,jdbcType=DECIMAL},
+      counts = #{counts,jdbcType=INTEGER},
+      category = #{category,jdbcType=INTEGER},
+      status = #{status,jdbcType=INTEGER},
+      other = #{other,jdbcType=VARCHAR}
+      sale_volume = #{sale_volume,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+
+    <!--add : chan 2018/4/4-->
+  <select id="selectByCategory" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select
+    <include refid="Base_Column_List" />
+    from good
+    where category = #{param1} AND status=1 LIMIT #{param2},#{param3}
+  </select>
+  <!--add : chan 2018/4/4-->
+  <select id="selectMore" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select
+    <include refid="Base_Column_List" />
+    from good
+    WHERE status>0
+    LIMIT #{param1},#{param2}
+  </select>
+
+  <!--add : chan 2018/4/18-->
+  <select id="selectByStatus" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select
+    <include refid="Base_Column_List" />
+    from good
+    where status = #{param1} LIMIT #{param2},#{param3}
+  </select>
+
+  <!--add : chan 2018/4/19-->
+  <select id="selectByOther" resultMap="BaseResultMap" >
+    select
+    <include refid="Base_Column_List" />
+    from good
+    where other = #{param1} AND (status=1 OR status=2) LIMIT #{param2},#{param3}
+  </select>
+
+  <!--add : chan 2018/4/19-->
+  <select id="selectByName" resultMap="BaseResultMap" >
+    select
+    <include refid="Base_Column_List" />
+    from good
+    where name LIKE #{param1} LIMIT #{param2},#{param3}
+  </select>
+
+  <!--add : chan 2018/4/19-->
+  <select id="selectBySort" resultMap="BaseResultMap" >
+    select
+    <include refid="Base_Column_List" />
+    from good
+    where category = #{param1} LIMIT #{param2},#{param3}
+    ORDER BY likes DESC
+  </select>
+
+  <!--add : chan 2018/4/19-->
+  <select id="selectBySet" resultMap="BaseResultMap" >
+    select
+    <include refid="Base_Column_List" />
+    from good
+    where find_in_set(id,#{param1})
+  </select>
+
+</mapper>

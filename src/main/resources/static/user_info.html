@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>用户个人信息</title>
+    <link href="plugins/user_info/css/demo.css" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="plugins/user_info/css/jqbar.css"/>
+    <link rel="stylesheet" type="text/css" href="plugins/user_info/css/bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="plugins/user_info/css/style.css">
+    <link rel="stylesheet" href="plugins/user_info/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" type="text/css" href="plugins/user_info/css/simpletextrotator.css"/>
+    <link rel="stylesheet" href="plugins/image_bigger/css/bootstrap-grid.min.css">
+    <link rel="stylesheet" href="plugins/image_bigger/dist/zoomify.min.css">
+    <link rel="stylesheet" href="css/style.css">
+    <!--[if lt IE 9]>
+    <style>
+        .rw-wrapper {
+            display: none;
+        }
+
+        .rw-sentence-IE {
+            display: block;
+        }
+    </style>
+    <![endif]-->
+</head>
+<body>
+<div class="container topbottom" ng-app="myApp" ng-controller="userCtrl">
+    <div class="row-fluid" style="border:2px solid gray;" data-ng-init="getUser()">
+        <div class="span5" style="background:white;">
+            <div style="border-bottom: 1px solid black;text-align: center;font-size:28px;padding: 20px;background:white;color:lightcoral">
+                用 户 信 息
+            </div>
+            <div class="navigation" style="background: white;">
+                <div>
+                    <ul style="background:white;">
+                        <li>
+                            <img src="plugins/user_info/img/no.png">
+                            <a href="#" style="color:black;">编号：{{user.id}}</a>
+                        </li>
+                        <li>
+                            <img src="plugins/user_info/img/account.png">
+                            <a href="#" style="color:black;">账号：{{user.phone}}</a>
+                        </li>
+                        <li>
+                            <img src="plugins/user_info/img/name.png">
+                            <a href="#" style="color:black;">姓名：{{user.name}}</a>
+                        </li>
+                        <li>
+                            <img src="plugins/user_info/img/school.png">
+                            <a href="#" style="color:black;">学校：{{user.school}}</a>
+                        </li>
+                        <li>
+                            <img src="plugins/user_info/img/status.png">
+                            <a href="#" style="color:black;">账号状态：{{user.status}}</a>
+                        </li>
+                        <li>
+                            <img src="plugins/user_info/img/max_limit.png">
+                            <a href="#" style="color:black;">白条额度：{{user.max_limit}}</a>
+                        </li>
+                        <li>
+                            <img src="plugins/user_info/img/cost.png">
+                            <a href="#" style="color:black;">白条开销：{{user.cost}}</a>
+                        </li>
+                        <li>
+                            <img src="plugins/user_info/img/valid.png">
+                            <a href="#" style="color:black;">白条状态：{{user.valid}}</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="copyrights">Collect from <a href="http://www.cssmoban.com/" title="用户信息">用户信息</a></div>
+
+        <div class="span7 homeabout">
+            <div class="person">
+                <span class="name" style="font-size: 20px;color:#fb7142;">用户证件照片</span>
+            </div>
+            <div class="desciption home form-inline">
+                <label for="idcard" style="vertical-align:top;">身份证照：&nbsp</label>
+                <img name="idcard" id="idcard" class="showImg" src="{{user.idc_img}}" alt="身份证照"
+                     style="width:250px;height:160px;">
+            </div>
+            <div class="row desciption  form-inline">
+                <label for="student" style="vertical-align:top;">学生证照：&nbsp</label>
+                <img name="student" id="student" class="showImg" src="{{user.stu_img}}" alt="学生证照"
+                     style="width:250px;height:160px;">
+            </div>
+            <div style="text-align: center">
+                <input type="button" ng-if="user.validr==1" class="btn-large btn-success" ng-click="userPass()" value="审核通过">&nbsp&nbsp&nbsp
+                <input type="button" ng-if="user.validr==1" class="btn-large btn-default" ng-click="userDel()" value="审核不通过">&nbsp&nbsp&nbsp
+                <input type="button" class="btn-large btn-danger" ng-click="userLock()" value="冻结用户">
+            </div>
+        </div>
+
+    </div>
+</div>
+<script src="plugins/user_info/js/jquery-1.7.1.min.js" type="text/javascript"></script>
+<script src="plugins/user_info/js/jqbar.js" type="text/javascript"></script>
+<script src="plugins/image_bigger/dist/zoomify.min.js"></script>
+<script type="text/javascript">
+    $('.showImg').zoomify();
+</script>
+<script type="text/javascript">
+    $(document).ready(function () {
+
+        $('#bar-1').jqbar({label: 'HTML5', value: 80, barColor: '#21ba82'});
+
+        $('#bar-2').jqbar({label: 'CSS', value: 99, barColor: '#21ba82'});
+
+        $('#bar-3').jqbar({label: 'JavaScript', value: 85, barColor: '#21ba82'});
+
+        $('#bar-4').jqbar({label: 'WordPress', value: 75, barColor: '#21ba82'});
+
+        $('#bars-content .content').css({'opacity': '0', display: 'none'});
+        $('#bars-content .content:eq(0)').css('display', 'block').animate({opacity: 1}, 1000);
+        $('.jqbar:first').addClass('active');
+        $('.jqbar').hover(function () {
+            $(this).addClass('hover');
+        }, function () {
+            $(this).removeClass('hover');
+        });
+        $('.jqbar').click(function () {
+            $('.jqbar').removeClass('active');
+            var id = $(this).addClass('active').attr('id').replace('bar', 'content');
+            $('#bars-content .content').css({'opacity': '0', display: 'none'});
+            $('#' + id).css('display', 'block').animate({opacity: 1}, 1000);
+
+        });
+
+    });
+
+</script>
+<script type="text/javascript" src="plugins/user_info/js/jquery.simple-text-rotator.min.js"></script>
+<script src="js/angular.min.js"></script>
+<script src="js/angular-pagination.js"></script>
+<script>
+    var app = angular.module('myApp', ['myModule']);
+    var n = 10;
+    var p = 1;
+    var data;
+    var max_limit;
+    app.controller('userCtrl', function ($scope, $http) {
+        $scope.getUser = function () {
+            var no = GetUrlPara();
+            $http({
+                method: 'GET',
+                url: '/user/get/' + no
+                // params: {page: p, num: n}
+            }).then(function successCallback(response) {
+                data = response.data;
+                data.validr = data.valid;
+                if (data.valid == 1) {
+                    data.valid = "未审核白条";
+                }
+                else if (data.valid == 2) {
+                    data.valid = "白条用户";
+                } else if (data.valid == 3) {
+                    data.valid = "白条待还款";
+                } else if (data.valid == 0) {
+                    data.valid = "白条审核不通过";
+                } else if (data.valid == 4){
+                    data.valid = "白条逾期未还款！";
+                }
+
+                if (data.status == 1) {
+                    data.status = "普通用户";
+                } else if (data.status == 0) {
+                    data.status = "失效（冻结）用户";
+                } else if (data.status == 9) {
+                    data.status = "管理员";
+                }
+                $scope.user = data;
+            }, function errorCallback(response) {
+                // 请求失败执行代码
+                console.log("网络异常！请联系管理员！");
+            });
+        }
+
+        $scope.userPass = function () {
+            $http({
+                method: 'POST',
+                url: '/debt/updateValid',
+                params: {id: user_id, valid: 2}
+            }).then(function successCallback(response) {
+                if (response.data == 1)
+                    alert("审核完毕！");
+                location.reload();
+                $scope.goods = response.data;
+                // var user = angular.fromJson(response.data);
+            }, function errorCallback(response) {
+                // 请求失败执行代码
+                console.log("网络异常！请联系管理员！");
+            });
+        }
+
+        $scope.userDel = function () {
+            $http({
+                method: 'POST',
+                url: '/debt/updateValid',
+                params: {id: user_id, valid: 0}
+            }).then(function successCallback(response) {
+                if (response.data == 1)
+                    alert("审核完毕！");
+                location.reload();
+                $scope.goods = response.data;
+                // var user = angular.fromJson(response.data);
+            }, function errorCallback(response) {
+                // 请求失败执行代码
+                console.log("网络异常！请联系管理员！");
+            });
+        }
+
+        $scope.userLock = function () {
+            $http({
+                method: 'POST',
+                url: '/user/updateStatus',
+                params: {user_id: user_id, status: 0}
+            }).then(function successCallback(response) {
+                if (response.data == 1)
+                    alert("冻结用户成功！");
+                location.reload();
+                $scope.goods = response.data;
+                // var user = angular.fromJson(response.data);
+            }, function errorCallback(response) {
+                // 请求失败执行代码
+                console.log("网络异常！请联系管理员！");
+            });
+        }
+
+
+        $scope.setuser = function (index) {
+            $("#userNum").attr("disabled", false);
+        }
+
+        $scope.userEdit = function (index) {
+            alert();
+            $http({
+                method: 'POST',
+                url: '/user/update',
+                params: {id: index, max: max_limit, valid: null}
+            }).then(function successCallback(response) {
+                if (response.data == 1)
+                    alert("修改额度成功！");
+                location.reload();
+                $scope.users = response.data;
+                // var user = angular.fromJson(response.data);
+            }, function errorCallback(response) {
+                // 请求失败执行代码
+                console.log("网络异常！请联系管理员！");
+            });
+        }
+
+    });
+
+    function modifyuser(index) {
+        max_limit = index;
+    }
+
+    //获取url中的后缀参数
+    function GetUrlPara() {
+        var url = document.location.toString();
+        var arrUrl = url.split("=");
+
+        var para = arrUrl[1];
+        // para = para.split("=")[1];
+        user_id = para;
+        return para;
+    }
+
+</script>
+</body>
+</html>	
