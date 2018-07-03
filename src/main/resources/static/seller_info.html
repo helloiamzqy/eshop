@@ -53,21 +53,22 @@
             <div class=" clearfix cl">
                 <div class="formControls col-10">
                     <label class="form-label col-2" style="display:block;float:left;">&nbsp;店铺电话：</label>
-                    <input ng-model="shop.introduce" id="seller_phone" style="display:block;float:left;width:60%;"
+                    <input ng-model="shop.contact" id="seller_phone" style="display:block;float:left;width:60%;"
                            type="text"
                            class="input-text">
                 </div>
             </div>
             <div class=" clearfix cl">
-                <div style="display: inline-block;width: 85%;">
-                    <div class="Add_p_s" style="margin-left:20px;">
-                        <label class="form-label col-2"><span class="c-red" style="color: red;">*</span>地&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;址：</label>
-                        <div class="formControls col-2">
-                            <input type="text" id="address" ng-model="shop.price" class="input-text" value=" "
-                                   placeholder="">
-                        </div>
+                <div class="Add_p_s" style="margin-left: 10px;">
+                    <label class="form-label col-2">省份：</label>
+                    <div class="formControls col-2">
+                        <span class="select-box">
+				        <select id="sellerProvince" class="select" ng-model="shop.selectedCategory"
+                                ng-init="selectedCategory = category[0]"
+                                ng-options="item.id as item.name for item in categorys">
+				        </select>
+				        </span>
                     </div>
-
                 </div>
 
                 <div class="Add_p_s" style="margin-left: 10px;">
@@ -76,12 +77,12 @@
                         <span class="select-box">
 				        <select id="sellerSchool" class="select" ng-model="shop.selectedCategory"
                                 ng-init="selectedCategory = category[0]"
-                                ng-options="item.id as item.name for item in categorys">
+                                ng-options="item.id as item.name for item in categorys2">
 				        </select>
 				        </span>
                     </div>
                 </div>
-                <div class="Add_p_s" style="margin-left: 25px;">
+                <div class="Add_p_s" style="margin-left: 25px;width:80%;">
                     <label class="form-label col-2">是否关铺？:&nbsp;&nbsp;</label><input id="onSales" ng-model="shop.onSale"
                                                                                      type="checkbox"
                                                                                      checked style="height: 30px;">
@@ -154,7 +155,108 @@
      * 是否关铺-----sellerSchool
      */
 </script>
+<script src="js/angular.min.js"></script>
+<script>
+    var shop_category;
+    var shop_style = "";
+    var app = angular.module('myApp', []);
+    app.controller('shopCtrl', function ($scope, $http) {
+        $scope.category = ["饮料", "日常用品", "零食", "家居用品", "电器", "烟酒", "粮油"];
+        $scope.shop = {id:6, name: "", introduce: "", contact: "", school_id: 0, status: 1, address: "",image:""};
+        $scope.categorys = [{name:"江苏省",id:1},{name:"浙江省",id:2},{name:"广东省",id:3}];
+        $scope.categorys2 = [{name:"江苏师范大学",id:1},{name:"江苏大学",id:2},{name:"南京大学",id:3}];
+        var formData = new FormData();
+        $scope.getCategory = function () {
+            $http({
+                method: 'POST',
+                url: '/shop/findByUserId',
+                params: {}
+            }).then(function successCallback(response) {
+                // shop_category = response.data;
+                $scope.shop = response.data;
+            }, function errorCallback(response) {
+                // 请求失败执行代码
+                console.log("网络异常！请联系管理员！");
+            });
+            $http({
+                method: 'POST',
+                url: '/shop/getAllProvince',
+                params: {}
+            }).then(function successCallback(response) {
+                // shop_category = response.data;
+                $scope.category = response.data;
+            }, function errorCallback(response) {
+                // 请求失败执行代码
+                console.log("网络异常！请联系管理员！");
+            });
+        };
+        $scope.uploadshop = function () {
+            // var img = $('#imgFile')[0].files[0];
+            // // formData.append('image', "img");
+            // formData.append('name', $scope.shop.name);
+            // formData.append('introduce', $scope.shop.introduce);
+            // formData.append('contact', $scope.shop.contact);
+            // formData.append('address', $scope.shop.address);
+            // formData.append('id',$scope.shop.id);
+            // var status = 0;  //店铺状态 1:营业中 0:休息中
+            // if ($("#onSales").is(':checked'))
+            //     status = 1;
+            // formData.append('status', status);
+            // formData.append('school_id', 1)
+            // var c = $scope.shop.selectedCategory;
+            // formData.append('category', c);
+            $http({
+                method: 'POST',
+                url: '/shop/update',
+                params:{image:"",name:$scope.shop.name,introduce:$scope.shop.introduce,contact:$scope.shop.contact,
+                    status:$scope.shop.status,school_id:$scope.shop.school_id,address:$scope.shop.address, id:$scope.shop.id}
+                // data: formData,
+                // headers: {'Content-Type': undefined},
+                // transformRequest: angular.identity
+            }).then(function successCallback(response) {
+                alert("添加商品成功！");
+                location.reload(); // "/html/Products_List.html";
+            }, function errorCallback(response) {
+                // 请求失败执行代码
+                console.log("网络异常！请联系管理员");
+            });
+        }
+    });
+    var content_id = "#content_";
+    var no = 0;
+    function addContent(){
+        var content_val = $("#content_value").val();
+        no = no + 1;
+        var id = content_id + no;
+        $(content_id+no).css('display','inline-block');
+        document.getElementById("content_"+no).innerText=content_val;
+        shop_style+=content_val+"@";
+        $("#content_value").val("");
+    }
+    function checkPrice() {
+        var number = $("#price").val();
+        var strP = /^\d+(.\d+)?$/; //正则
+        if (!strP.test(number)) {
+            alert("输入价格格式有误");
+            return false;
+        }
+        return true;
+    }
+</script>
+<script>
+    var image = '';
 
+    function selectImage(file) {
+        if (!file.files || !file.files[0]) {
+            return;
+        }
+        var reader = new FileReader();
+        reader.onload = function (evt) {
+            document.getElementById('image').src = evt.target.result;
+            image = evt.target.result;
+        }
+        reader.readAsDataURL(file.files[0]);
+    }
+</script>
 </body>
-<
 </html>

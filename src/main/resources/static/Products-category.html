@@ -31,29 +31,33 @@
     <script src="assets/laydate/laydate.js" type="text/javascript"></script>
     <script type="text/javascript" src="Widget/zTree/js/jquery.ztree.all-3.5.min.js"></script>
     <script src="js/lrtk.js" type="text/javascript"></script>
-    <title>产品列表</title>
+    <title>所有商品</title>
 </head>
 <body>
 <div class=" page-content clearfix" ng-app="myApp" ng-controller="goodCtrl">
-    <div id="products_style" data-ng-init="getGood()">
+    <div id="products_style" data-ng-init="GetUrlPara()">
 
         <div class="border clearfix">
        <span class="l_f">
-        <a href="Product-add.html" title="添加商品" class="btn btn-warning Order_form"><i class="icon-plus"></i>添加商品</a>
-           <!--<a href="javascript:ovid()" class="btn btn-danger"><i class="icon-trash"></i>批量删除</a>-->
+        <!--<a href="Product-add.html" title="添加商品" class="btn btn-warning Order_form"><i class="icon-plus"></i>添加商品</a>-->
+        <!--<a href="javascript:ovid()" class="btn btn-danger"><i class="icon-trash"></i>批量删除</a>-->
        </span>
             <!--<span class="r_f">共：<b>{{goodNum}}</b>件商品</span>-->
         </div>
         <div class="search_style">
 
             <ul class="search_content clearfix">
-                <li><label class="l_f">产品名称</label><input name="" type="text" class="text_add" ng-model="trade_id"
-                                                          placeholder="输入品牌名称"
+                <li><label class="l_f">产品名称</label><input name="" type="text" class="text_add" ng-model="trade_id" placeholder="输入品牌名称"
                                                           style=" width:250px"/></li>
                 <li style="width:90px;">
-                    <button type="button" class="btn_search" ng-click="checkById()"><i class="icon-search"></i>查询
-                    </button>
+                    <button type="button" class="btn_search" ng-click="checkById()"><i class="icon-search"></i>查询</button>
                 </li>
+                <div style="float:right;margin-right: 50px;" id="good_is_category">
+                    <label for="goodStatus">商品分类：</label>
+                    <select ng-model="goodStatus" id="goodStatus">
+                        <option ng-repeat="cat in categorys" value="{{cat.id}}">{{cat.name}}</option>
+                    </select>
+                </div>
             </ul>
         </div>
         <!--产品列表展示-->
@@ -87,26 +91,33 @@
                     <tbody ng-repeat="good in goods">
                     <tr>
                         <td width="50px">{{good.id}}</td>
-                        <td width="100px"><u style="cursor:pointer" class="text-primary" onclick="">{{good.name}}</u>
-                        </td>
-                        <td width="130px"><img style="width:100px;height: 80px;" ng-src="{{good.image}}" alt="商品图片"/>
-                        </td>
+                        <td width="100px"><u style="cursor:pointer" class="text-primary" onclick="">{{good.name}}</u></td>
+                        <td width="130px"><img  style="width:100px;height: 80px;" ng-src="{{good.image}}" alt="商品图片"/></td>
                         <td width="60px">{{good.price}}</td>
                         <td width="60px">{{good.price}}</td>
                         <td width="60px">{{good.counts}}</td>
-                        <td class="80px">
+                        <td class="80px" >
                             <span ng-repeat="c in categorys" ng-if="good.category==c.id">{{c.name}}</span>
+                            <span ng-if="good.category==null">未分组分类</span>
                         </td>
-                        <td class="td-status" width="60px"><span class="label radius" width="60px">未上架</span></td>
+                        <td class="td-status" width="60px">
+                            <span ng-if="good.status==2" class="label radius" width="60px">未上架</span>
+                            <span ng-if="good.status==1" class="label label-success radius" width="60px">已上架</span>
+                            <span ng-if="good.status==0" class="label label-danger radius" width="60px">已删除</span>
+                        </td>
                         <td class="text-l">{{good.introduce}}</td>
                         <td class="td-manage">
-                            <a ng-click="goodOff(good.id)" href="javascript:;" title="上架"
-                               class="btn btn-xs btn-success"><i class="icon-ok bigger-120"></i></a>
+                            <!--<a ng-click="goodOff(good.id,1)" ng-if="good.status==-1" href="javascript:;" title="上架"-->
+                               <!--class="btn btn-xs btn-success"><i class="icon-ok bigger-120"></i></a>-->
+                            <a ng-click="goodOff(good.id,-1)" ng-if="good.status!=-1" href="javascript:;" title="取消分组分类"
+                               class="btn btn-xs btn-warning"><i class="icon-remove bigger-120"></i></a>
                             <!--onclick="member_edit('编辑','member_edit.html','4','','510')"-->
-                            <a ng-click="goodEdit(good.id)" title="编辑" href="javascript:;"
+                            <a ng-click="goodEdit(good.id)" ng-if="good.status==1||good.status==2" title="编辑"  href="javascript:;"
                                class="btn btn-xs btn-info"><i class="icon-edit bigger-120"></i></a>
-                            <a ng-click="goodDel(good.id)" title="删除" href="javascript:;"
-                               class="btn btn-xs btn-warning"><i class="icon-trash  bigger-120"></i></a>
+                            <!--<a ng-click="goodDel(good.id)" ng-if="good.status!=0" title="删除" href="javascript:;"-->
+                               <!--class="btn btn-xs btn-danger"><i class="icon-trash  bigger-120"></i></a>-->
+                            <!--<a ng-click="goodOff(good.id,2)" ng-if="good.status==0" title="还原" href="javascript:;"-->
+                               <!--class="btn btn-xs btn-success"><i class="icon-circle-arrow-up  bigger-120"></i></a>-->
                         </td>
                     </tr>
 
@@ -213,7 +224,7 @@
             }
         }
     };
-
+       
 
     var code;
 
@@ -222,7 +233,6 @@
         code.empty();
         code.append("<li>" + str + "</li>");
     }
-
     // var zNodes;
     // $(document).ready(function () {
     //     var t = $("#treeDemo");
@@ -292,14 +302,29 @@
 <script>
     var app = angular.module('myApp', ['myModule']);
     var n = 10;
-    var total = 1;
-    total = getCookie("goodOffNum") / n;
+    var total = 10;
+    total = getCookie("goodNum")/n;
     total = Math.ceil(total);
     var p = 1;
     var data;
-    var sId = getCookie("shopId"); // 2018-6-30
-    app.controller('goodCtrl', function ($scope, $http) {
+    var goodStatus = 10;
+    app.controller('goodCtrl', function($scope,$http) {
         $scope.goodNum = total;
+        $scope.getGood = function () {
+            $scope.getCategory();
+            $http({
+                method: 'POST',
+                url: '/good/findByCategory',
+                params:{category:goodStatus,page:p,num:n}
+            }).then(function successCallback(response) {
+                data = response.data;
+                $scope.goods = data;
+            }, function errorCallback(response) {
+                // 请求失败执行代码
+                console.log("网络异常！请联系管理员！");
+            });
+        }
+
         $scope.getCategory = function () {
             $http({
                 method: 'POST',
@@ -314,21 +339,6 @@
             });
         }
 
-        $scope.getGood = function () {
-            $http({
-                method: 'POST',
-                url: '/good/findByStatus',
-                params: {shopId:sId,status: 2, page: p, num: n}
-            }).then(function successCallback(response) {
-                if (angular.isUndefined(response.data[0].id))
-                    alert("无商品！");
-                data = response.data;
-                $scope.goods = data;
-            }, function errorCallback(response) {
-                // 请求失败执行代码
-                console.log("网络异常！请联系管理员！");
-            });
-        }
         // $scope.getGood();
         //设置分页的参数
         $scope.option = {
@@ -340,10 +350,10 @@
                 //这里可以写跳转到某个页面等...
                 $http({
                     method: 'POST',
-                    url: '/good/findByStatus',
-                    params: {shopId:sId,status: 2, page: pages, num: n}
+                    url: '/good/findByCategory',
+                    params:{category:goodStatus,page:pages,num:n}
                 }).then(function successCallback(response) {
-                    if (angular.isUndefined(response.data[0].id))
+                    if(angular.isUndefined(response.data[0].id))
                         alert("无商品！");
                     data = response.data;
                     $scope.goods = response.data;
@@ -355,11 +365,33 @@
             }
         }
 
+        $scope.$watch('goodStatus',function () {
+            goodStatus = $scope.goodStatus;
+            if(goodStatus) {
+                $scope.getGood();
+            }
+        });
+
+        //获取url中的后缀参数
+        $scope.GetUrlPara = function () {
+            var url = document.location.toString();
+            var arrUrl = url.split("=");
+            var para = arrUrl[1];
+            if(para){
+                $scope.goodStatus = para;
+                // $scope.getTrade();
+                if(para==-1){
+                    $("#good_is_category").css("display","none");
+                }
+            }
+            return para;
+        };
+
         $scope.checkById = function () {
             $http({
                 method: 'POST',
                 url: '/good/findByName',
-                params: {shopId:sId,Name: $scope.trade_id, page: 1, num: 100}
+                params: {Name:$scope.trade_id,page:1,num:100}
             }).then(function successCallback(response) {
                 data = response.data;
                 $scope.goods = data;
@@ -369,14 +401,14 @@
             });
         };
 
-        $scope.goodOff = function (index) {
+        $scope.goodOff = function (index,statuss) {
             $http({
                 method: 'POST',
-                url: '/good/updateStatus',
-                params: {shopId:sId,id: index, status: 1}
+                url: '/good/updateCategory',
+                params:{id:index,category:statuss}
             }).then(function successCallback(response) {
-                if (response.data == 1)
-                    alert("商品上架成功！");
+                if(response.data==1)
+                    alert("商品状态更新成功！");
                 location.reload();
                 $scope.goods = response.data;
                 // var user = angular.fromJson(response.data);
@@ -390,9 +422,9 @@
             $http({
                 method: 'POST',
                 url: '/good/updateStatus',
-                params: {id: index, status: 0}
+                params:{id:index,status:0}
             }).then(function successCallback(response) {
-                if (response.data == 1)
+                if(response.data==1)
                     alert("已删除商品！");
                 location.reload();
                 $scope.goods = response.data;
@@ -404,19 +436,20 @@
         }
 
         $scope.goodEdit = function (index) {
-            setCookie("good_id", index);
-            for (var i = 0; i < data.length; i++) {
-                if (data[i].id == index) {
-                    setCookie("good_name", data[i].name);
-                    setCookie("good_introduce", data[i].introduce);
-                    setCookie("good_image", data[i].image);
-                    setCookie("good_price", data[i].price);
-                    setCookie("good_count", data[i].counts);
-                    setCookie("good_category", data[i].category)
+            setCookie("good_id",index);
+            for(var i=0;i<data.length;i++){
+                if(data[i].id==index){
+                    setCookie("good_name",data[i].name);
+                    setCookie("good_introduce",data[i].introduce);
+                    setCookie("good_image",data[i].image);
+                    setCookie("good_price",data[i].price);
+                    setCookie("good_count",data[i].counts);
+                    setCookie("good_category",data[i].category);
+                    setCookie("good_content", data[i].content);
                 }
             }
 
-            setTimeout(1000, member_edit('编辑', 'member_edit.html', '4', '', '510'));
+            setTimeout(1000,member_edit('编辑','member_edit.html','4','','510'));
             // $http({
             //     method: 'POST',
             //     url: '/good/updateStatus',

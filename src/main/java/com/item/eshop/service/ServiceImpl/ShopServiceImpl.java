@@ -55,4 +55,11 @@ public class ShopServiceImpl implements ShopService {
     public List<Shop> selectMoreByCategory(Integer valid, Integer page, Integer num) {
         return shopMapper.selectMoreByCategory(valid,page,num);
     }
+
+    @Override
+    public Shop selectByUser(Integer id) {
+        return shopMapper.selectByUser(id);
+    }
+
+
 }

@@ -6,34 +6,34 @@
     <result column="name" property="name" jdbcType="VARCHAR" />
     <result column="introduce" property="introduce" jdbcType="VARCHAR" />
     <result column="contact" property="contact" jdbcType="VARCHAR" />
-    <result column="school_id" property="schoolId" jdbcType="INTEGER" />
+    <result column="school_id" property="school_id" jdbcType="INTEGER" />
     <result column="image" property="image" jdbcType="VARCHAR" />
     <result column="status" property="status" jdbcType="INTEGER" />
     <result column="address" property="address" jdbcType="VARCHAR" />
-    <result column="user_id" property="userId" jdbcType="INTEGER" />
+    <result column="user_id" property="user_id" jdbcType="INTEGER" />
   </resultMap>
   <sql id="Base_Column_List" >
-    id, title,content,category,times,image,status,foreign_id
+    id, name,introduce,contact,school_id,image,status,address,user_id
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select 
     <include refid="Base_Column_List" />
-    from Shop
+    from shop
     where id = #{id,jdbcType=INTEGER}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
-    delete from Shop
+    delete from shop
     where id = #{id,jdbcType=INTEGER}
   </delete>
   <insert id="insert" parameterType="com.item.eshop.model.Shop" >
-    insert into Shop ( name,introduce,address,status,userId,image,schoolId,contact
+    insert into shop ( name,introduce,address,status,user_id,image,school_id,contact
       )
     values (#{name,jdbcType=VARCHAR}, #{introduce,jdbcType=VARCHAR}, #{address,jdbcType=VARCHAR},
-    #{status,jdbcType=INTEGER}, #{userId,jdbcType=INTEGER}, #{image,jdbcType=VARCHAR},#{schoolId,jdbcType=INTEGER},#{contact,jdbcType=VARCHAR}
+    #{status,jdbcType=INTEGER}, #{user_id,jdbcType=INTEGER}, #{image,jdbcType=VARCHAR},#{school_id,jdbcType=INTEGER},#{contact,jdbcType=VARCHAR}
       )
   </insert>
   <insert id="insertSelective" parameterType="com.item.eshop.model.Shop" >
-    insert Shop
+    insert shop
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="name != null" >
         name,
@@ -47,14 +47,14 @@
       <if test="status != null" >
         status,
       </if>
-      <if test="userId != null" >
-        userId,
+      <if test="user_id != null" >
+        user_id,
       </if>
       <if test="image != null" >
         image,
       </if>
-      <if test="schoolId != null">
-        schoolId,
+      <if test="school_id != null">
+        school_id,
       </if>
       <if test="contact != null">
         contact,
@@ -76,11 +76,11 @@
       <if test="image != null" >
         #{image,jdbcType=VARCHAR},
       </if>
-      <if test="userId != null" >
-        #{userId,jdbcType=INTEGER},
+      <if test="user_id != null" >
+        #{user_id,jdbcType=INTEGER},
       </if>
-      <if test="schoolId != null" >
-        #{schoolId,jdbcType=INTEGER},
+      <if test="school_id != null" >
+        #{school_id,jdbcType=INTEGER},
       </if>
       <if test="contact != null" >
         #{contact,jdbcType=VARCHAR},
@@ -88,7 +88,7 @@
     </trim>
   </insert>
   <update id="updateByPrimaryKeySelective" parameterType="com.item.eshop.model.Shop" >
-    update Shop
+    update shop
     <set >
       <if test="name != null" >
         name = #{name,jdbcType=VARCHAR},
@@ -105,41 +105,54 @@
       <if test="image != null" >
         image = #{image,jdbcType=VARCHAR},
       </if>
-      <if test="userId != null" >
-        userId = #{userId,jdbcType=INTEGER},
+      <if test="user_id != null" >
+        user_id = #{user_id,jdbcType=INTEGER},
       </if>
-      <if test="schoolId != null" >
-      schoolId = #{schoolId,jdbcType=INTEGER},
+      <if test="school_id != null" >
+      school_id = #{school_id,jdbcType=INTEGER},
     </if>
       <if test="contact != null" >
         contact = #{contact,jdbcType=VARCHAR},
       </if>
     </set>
-    where id = #{id,jdbcType=INTEGER} AND userId = #{userId,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER} AND user_id = #{user_id,jdbcType=INTEGER}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.item.eshop.model.Shop" >
-    update Shop
+    update shop
     set  name = #{name,jdbcType=VARCHAR},
       introduce = #{introduce,jdbcType=VARCHAR},
       address = #{address,jdbcType=VARCHAR},
-      userId = #{userId,jdbcType=INTEGER},
+      user_id = #{user_id,jdbcType=INTEGER},
       image = #{image,jdbcType=VARCHAR},
       status = #{status,jdbcType=INTEGER},
-      schoolId = #{schoolId,jdbcType=INTEGER},
+      school_id = #{school_id,jdbcType=INTEGER},
       contact = #{contact,jdbcType=VARCHAR},
-    where id = #{id,jdbcType=INTEGER} AND userId = #{userId,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER} AND user_id = #{user_id,jdbcType=INTEGER}
   </update>
   <select id="selectMore" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select
     <include refid="Base_Column_List" />
-    from Shop
+    from shop
     LIMIT #{param1},#{param2}
   </select>
   <select id="selectMoreByCategory" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select
     <include refid="Base_Column_List" />
-    from Shop
+    from shop
     where category = #{param1}
     LIMIT #{param2},#{param3}
+  </select>
+  <select id="selectByUser" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from shop
+    where user_id = #{param1}
+  </select>
+  <!--add zheng 2018.6.30 -->
+  <select id="selectShopBySchoolId" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from shop
+    where school_id = #{param1}
   </select>
 </mapper>

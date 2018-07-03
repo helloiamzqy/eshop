@@ -32,6 +32,16 @@ public class Trade {
 
     private String pay_trade_no;
 
+    private Integer shopId;
+
+    public Integer getShopId() {
+        return shopId;
+    }
+
+    public void setShopId(Integer shopId) {
+        this.shopId = shopId;
+    }
+
     public String getPay_trade_no() {
         return pay_trade_no;
     }

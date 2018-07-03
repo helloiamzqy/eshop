@@ -19,10 +19,11 @@ public interface ShopMapper {
 
     int updateByPrimaryKey(Shop record);
 
-    // add: chan  2018/4/4
     List<Shop> selectMore(Integer page, Integer num);
 
-    // add: chan  2018/4/16
     List<Shop> selectMoreByCategory(Integer valid, Integer page, Integer num);
 
+    Shop selectByUser(Integer id);
+    //add zheng 2018.6.30
+    List<Shop> selectShopBySchoolId(Integer id);
 }

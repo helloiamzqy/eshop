@@ -414,7 +414,7 @@
                         </ul>
                     </li>
                     <li class="home"><a href="javascript:void(0)" name="seller_info.html" class="iframeurl"><i class="icon-user"></i><span
-                            class="menu-text"> 商家信息管理 </span></a>
+                            class="menu-text"> 店铺信息管理 </span></a>
                     </li>
                    <!-- <li>
                         <a href="#" class="dropdown-toggle"><i class="icon-tags"></i><span
@@ -677,6 +677,22 @@
         });
     }
 
+    function getShop() {
+        $.ajax({
+            type: "POST", //用POST方式传输
+            dataType: "text", //数据格式:JSON
+            url: '/shop/findByUserId', //目标地址
+            data: {},
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                console.log("error.");
+            },
+            success: function (msg) {
+              var result = JSON.parse(msg);
+              setCookie("shopId",result.id);
+            }
+        });
+    }
+    getShop();
 
     var code = ""; //接收验证码
     $('#code-btn').click(function () {
@@ -709,6 +725,8 @@
         });
     });
 </script>
+<script src="js/angular.min.js"></script>
+
 </body>
 </html>
 

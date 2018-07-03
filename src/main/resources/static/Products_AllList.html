@@ -303,7 +303,7 @@
             $http({
                 method: 'POST',
                 url: '/good/findByStatus',
-                params:{status:2,page:p,num:n}
+                params:{shopId:getCookie("shopId"),status:2,page:p,num:n}
             }).then(function successCallback(response) {
                 if(angular.isUndefined(response.data[0].id))
                     alert("无商品！");
@@ -326,7 +326,7 @@
                 $http({
                     method: 'POST',
                     url: '/good/findByStatus',
-                    params:{status:2,page:pages,num:n}
+                    params:{shopId:getCookie("shopId"),status:2,page:pages,num:n}
                 }).then(function successCallback(response) {
                     if(angular.isUndefined(response.data[0].id))
                         alert("无商品！");
@@ -343,7 +343,7 @@
             $http({
                 method: 'POST',
                 url: '/good/updateStatus',
-                params:{id:index,status:1}
+                params:{shopId:getCookie("shopId"),id:index,status:1}
             }).then(function successCallback(response) {
                 if(response.data==1)
                     alert("商品上架成功！");
@@ -360,7 +360,7 @@
             $http({
                 method: 'POST',
                 url: '/good/update',
-                params:{id:index,status:0}
+                params:{shopId:getCookie("shopId"),id:index,status:0}
             }).then(function successCallback(response) {
                 if(response.data==1)
                     alert("已删除商品！");

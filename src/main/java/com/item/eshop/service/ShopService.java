@@ -21,4 +21,6 @@ public interface ShopService {
     List<Shop> selectMore(Integer page, Integer num);
 
     List<Shop> selectMoreByCategory(Integer valid, Integer page, Integer num);
+
+    Shop selectByUser(Integer id);
 }

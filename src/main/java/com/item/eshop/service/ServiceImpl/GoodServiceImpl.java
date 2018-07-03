@@ -46,34 +46,34 @@ public class GoodServiceImpl implements GoodService {
 
     //add : chan 2018/4/4
     @Override
-    public List<Good> selectMore(Integer page, Integer num) {
-        return goodMapper.selectMore(page,num);
+    public List<Good> selectMore(Integer shopId, Integer page, Integer num) {
+        return goodMapper.selectMore(shopId,page,num);
     }
 
     //add : chan 2018/4/4
     @Override
-    public List<Good> selectByCategory(Integer category, Integer page, Integer num) {
-        return goodMapper.selectByCategory(category,page,num);
+    public List<Good> selectByCategory(Integer shopId, Integer category, Integer page, Integer num) {
+        return goodMapper.selectByCategory(shopId,category,page,num);
     }
 
     @Override
-    public List<Good> selectByStatus(Integer status, Integer page, Integer num) {
-        return goodMapper.selectByStatus(status, page, num);
+    public List<Good> selectByStatus(Integer shopId, Integer status, Integer page, Integer num) {
+        return goodMapper.selectByStatus(shopId,status, page, num);
     }
 
     @Override
-    public List<Good> selectByOther(String other, Integer page, Integer num) {
-        return goodMapper.selectByOther(other,page,num);
+    public List<Good> selectByOther(Integer shopId, String other, Integer page, Integer num) {
+        return goodMapper.selectByOther(shopId,other,page,num);
     }
 
     @Override
-    public List<Good> selectByName(String name, Integer page, Integer num) {
-        return goodMapper.selectByName(name, page, num);
+    public List<Good> selectByName(Integer shopId, String name, Integer page, Integer num) {
+        return goodMapper.selectByName(shopId,name, page, num);
     }
 
     @Override
-    public List<Good> selectBySort(Integer category, Integer page, Integer num) {
-        return goodMapper.selectBySort(category, page, num);
+    public List<Good> selectBySort(Integer shopId, Integer category, Integer page, Integer num) {
+        return goodMapper.selectBySort(shopId,category, page, num);
     }
 
     @Override

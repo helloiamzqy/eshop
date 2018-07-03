@@ -177,13 +177,13 @@ public class TradeServiceImpl implements TradeService {
     }
 
     @Override
-    public List<Trade> selectByStatus(Integer status, Integer page, Integer num) {
-        return tradeMapper.selectByStatus(status,page,num);
+    public List<Trade> selectByStatus(Integer shopId,Integer status, Integer page, Integer num) {
+        return tradeMapper.selectByStatus(shopId,status,page,num);
     }
 
     @Override
-    public List<Trade> selectMore(Integer page, Integer num) {
-        return tradeMapper.selectMore(page,num);
+    public List<Trade> selectMore(Integer shopId,Integer page, Integer num) {
+        return tradeMapper.selectMore(shopId,page,num);
     }
 
     @Override
@@ -199,13 +199,13 @@ public class TradeServiceImpl implements TradeService {
     }
 
     @Override
-    public List<Trade> selectBySet(Integer user_id,String status) {
-        return tradeMapper.selectBySet(user_id,status);
+    public List<Trade> selectBySet(Integer shopId,Integer user_id,String status) {
+        return tradeMapper.selectBySet(shopId,user_id,status);
     }
 
     @Override
-    public List<Trade> selectBySets(String status, Integer page, Integer num) {
-        return tradeMapper.selectBySets(status, page, num);
+    public List<Trade> selectBySets(Integer shopId,String status, Integer page, Integer num) {
+        return tradeMapper.selectBySets(shopId,status, page, num);
     }
 
     @Override

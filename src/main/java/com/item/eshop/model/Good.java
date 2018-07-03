@@ -29,6 +29,16 @@ public class Good {
 
     private Integer sale_volume;
 
+    private Integer shopId;
+
+    public Integer getShopId() {
+        return shopId;
+    }
+
+    public void setShopId(Integer shopId) {
+        this.shopId = shopId;
+    }
+
     public Integer getSale_volume() {
         return sale_volume;
     }

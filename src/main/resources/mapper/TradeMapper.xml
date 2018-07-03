@@ -17,10 +17,11 @@
         <result column="content" property="content" jdbcType="VARCHAR"/>
         <result column="image" property="image" jdbcType="VARCHAR"/>
         <result column="pay_trade_no" property="pay_trade_no" jdbcType="VARCHAR"/>
+        <result column="shop_id" property="shopId" jdbcType="INTEGER"/>
     </resultMap>
     <sql id="Base_Column_List">
     id, starttime, amount, trade_good, fact_amount, coupon_id, user_id, pay_type, address_id,
-    status, endtime,address,content,image,pay_trade_no
+    status, endtime,address,content,image,pay_trade_no,shop_id
   </sql>
     <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String">
         select
@@ -36,12 +37,12 @@
     insert into trade (id, starttime, amount, 
       trade_good, fact_amount, coupon_id,
       user_id, pay_type, address_id, 
-      status, endtime,address,content,image,pay_trade_no)
+      status, endtime,address,content,image,pay_trade_no,shop_id)
     values (#{id,jdbcType=VARCHAR}, #{starttime,jdbcType=TIMESTAMP}, #{amount,jdbcType=DECIMAL}, 
       #{tradeGood,jdbcType=VARCHAR}, #{factAmount,jdbcType=DECIMAL}, #{couponId,jdbcType=VARCHAR},
       #{userId,jdbcType=INTEGER}, #{pay_type,jdbcType=INTEGER}, #{addressId,jdbcType=INTEGER}, 
       #{status,jdbcType=INTEGER}, #{endtime,jdbcType=TIMESTAMP},#{address,jdbcType=VARCHAR},
-      #{content,jdbcType=VARCHAR},#{image,jdbcType=VARCHAR},#{pay_trade_no,jdbcType=VARCHAR})
+      #{content,jdbcType=VARCHAR},#{image,jdbcType=VARCHAR},#{pay_trade_no,jdbcType=VARCHAR},#{shopId,jdbcType=INTEGER})
   </insert>
     <insert id="insertSelective" parameterType="com.item.eshop.model.Trade">
         insert into trade
@@ -91,6 +92,9 @@
             <if test=" pay_trade_no != null">
                 pay_trade_no,
             </if>
+            <if test=" shopId != null">
+                shop_id,
+            </if>
         </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
             <if test="id != null">
@@ -137,6 +141,9 @@
             </if>
             <if test="pay_trade_no != null">
                 #{pay_trade_no,jdbcType=VARCHAR},
+            </if>
+            <if test="shopId != null">
+                #{shop_id,jdbcType=VARCHAR},
             </if>
         </trim>
     </insert>
@@ -203,14 +210,14 @@
       address = #{address,jdbcType=VARCHAR},
       content = #{content,jdbcType=VARCHAR},
       image = #{image,jdbcType=VARCHAR},
-      pay_trade_no = #{pay_trade_no,jdbcType=VARCHAR}
+      pay_trade_no = #{pay_trade_no,jdbcType=VARCHAR},
     where id = #{id,jdbcType=VARCHAR}
   </update>
     <select id="selectByStatus" resultMap="BaseResultMap" parameterType="java.lang.Integer">
         select
         <include refid="Base_Column_List"/>
         from trade
-        where status=#{param1} ORDER BY starttime ASC LIMIT #{param2},#{param3}
+        where shop_id=#{param1} AND status=#{param2} ORDER BY starttime ASC LIMIT #{param3},#{param4}
     </select>
     <!-- add 2018-4-21 -->
     <select id="selectByUserAndStatus" resultMap="BaseResultMap" parameterType="java.lang.Integer">
@@ -229,20 +236,21 @@
         select
         <include refid="Base_Column_List"/>
         from trade
-        where user_id=#{param1} AND find_in_set(status,#{param2}) ORDER BY starttime ASC
+        where shop_id=#{param1} AND user_id=#{param2} AND find_in_set(status,#{param3}) ORDER BY starttime ASC
     </select>
     <select id="selectMore" resultMap="BaseResultMap" parameterType="java.lang.Integer">
         select
         <include refid="Base_Column_List"/>
         from trade
+        WHERE shop_id=#{param1}
         ORDER BY starttime ASC
-        LIMIT #{param1},#{param2}
+        LIMIT #{param2},#{param3}
     </select>
     <select id="selectBySets" resultMap="BaseResultMap">
         select
         <include refid="Base_Column_List"/>
         from trade
-        where find_in_set(status,#{param1}) ORDER BY starttime ASC LIMIT #{param2},#{param3}
+        where shop_id=#{param1} AND find_in_set(status,#{param2}) ORDER BY starttime ASC LIMIT #{param3},#{param4}
     </select>
     <update  id="updateTradeSuccess">
         UPDATE trade SET

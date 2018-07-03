@@ -22,9 +22,9 @@ public interface TradeMapper {
     // add  : chan   2018/4/4
     List<Trade> selectByUser(Integer user_id,Integer page,Integer num);
 
-    List<Trade> selectByStatus(Integer status,Integer page,Integer num);
+    List<Trade> selectByStatus(Integer shopId,Integer status,Integer page,Integer num);
 
-    List<Trade> selectMore(Integer page,Integer num);
+    List<Trade> selectMore(Integer shopId,Integer page,Integer num);
 
     // add : chan 2018-4-21
     List<Trade> selectByUserAndStatus(Integer user_id,Integer status, Integer page, Integer num);
@@ -32,9 +32,9 @@ public interface TradeMapper {
     Trade selectByIdAndUserId(String id,Integer user_id);
 
     // add: chan 2018-5-7
-    List<Trade> selectBySet(Integer user_id,String status);
+    List<Trade> selectBySet(Integer shopId,Integer user_id,String status);
 
-    List<Trade> selectBySets(String status,Integer page,Integer num);
+    List<Trade> selectBySets(Integer shopId,String status,Integer page,Integer num);
 
     Integer updateTradeSuccess();
 

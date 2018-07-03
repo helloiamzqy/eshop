@@ -57,22 +57,22 @@ public class GoodController {
             @ApiImplicitParam(name = "num", value = "商品展示数量", required = true ,dataType = "Integer")})
     @ResponseBody
     @PostMapping("/findMore")
-    public String findMore(@RequestParam(value = "page")Integer page,@RequestParam(value = "num")Integer num) {
-        return JsonObject.toJson(goodService.selectMore((page-1)*num,num));
+    public String findMore(@RequestParam(value = "shopId")Integer shopId,@RequestParam(value = "page")Integer page,@RequestParam(value = "num")Integer num) {
+        return JsonObject.toJson(goodService.selectMore(shopId,(page-1)*num,num));
     }
 
     // add :  chan  2018/4/4
     @ApiOperation(value="按序根据页数查找多个商品",notes="返回值(商品对象)数组或null")
     @ApiImplicitParams({@ApiImplicitParam(name = "page", value = "页数", required = true ,dataType = "Integer",paramType = "query"),
             @ApiImplicitParam(name = "num", value = "商品展示数量", required = true ,dataType = "Integer",paramType = "query"),
-            @ApiImplicitParam(name = "category", value = "商品展示类型", required = true ,dataType = "Integer",paramType = "query")})
+            @ApiImplicitParam(name = "shopId", value = "商品展示类型", required = true ,dataType = "Integer",paramType = "query")})
     @ResponseBody
     @PostMapping("/findByStatus")
-    public String findByStatus(@RequestParam(value = "status")Integer status,@RequestParam(value = "page")Integer page,@RequestParam(value = "num")Integer num) {
+    public String findByStatus(@RequestParam(value = "shopId")Integer shopId,@RequestParam(value = "status")Integer status,@RequestParam(value = "page")Integer page,@RequestParam(value = "num")Integer num) {
         if(status==10){
-            return JsonObject.toJson(goodService.selectMore((page-1)*num,num));
+            return JsonObject.toJson(goodService.selectMore(shopId,(page-1)*num,num));
         }
-        return JsonObject.toJson(goodService.selectByStatus(status,(page-1)*num,num));
+        return JsonObject.toJson(goodService.selectByStatus(shopId,status,(page-1)*num,num));
     }
 
     // add :  chan  2018/4/4
@@ -82,8 +82,8 @@ public class GoodController {
             @ApiImplicitParam(name = "category", value = "商品展示类型", required = true ,dataType = "Integer",paramType = "query")})
     @ResponseBody
     @PostMapping("/findByCategory")
-    public String findByCategory(@RequestParam(value = "category")Integer category,@RequestParam(value = "page")Integer page,@RequestParam(value = "num")Integer num) {
-        return JsonObject.toJson(goodService.selectByCategory(category,(page-1)*num,num));
+    public String findByCategory(@RequestParam(value="shopId")Integer shopId,@RequestParam(value = "category")Integer category,@RequestParam(value = "page")Integer page,@RequestParam(value = "num")Integer num) {
+        return JsonObject.toJson(goodService.selectByCategory(shopId,category,(page-1)*num,num));
     }
 
     // add :  chan  2018/4/19
@@ -93,8 +93,8 @@ public class GoodController {
             @ApiImplicitParam(name = "category", value = "商品展示类型", required = true ,dataType = "Integer",paramType = "query")})
     @ResponseBody
     @PostMapping("/findBySort")
-    public String findBySort(@RequestParam(value = "category")Integer category,@RequestParam(value = "page")Integer page,@RequestParam(value = "num")Integer num) {
-        return JsonObject.toJson(goodService.selectBySort(category,(page-1)*num,num));
+    public String findBySort(@RequestParam(value = "shopId")Integer shopId,@RequestParam(value = "category")Integer category,@RequestParam(value = "page")Integer page,@RequestParam(value = "num")Integer num) {
+        return JsonObject.toJson(goodService.selectBySort(shopId,category,(page-1)*num,num));
     }
 
     // add :  chan  2018/4/4
@@ -104,8 +104,8 @@ public class GoodController {
             @ApiImplicitParam(name = "name", value = "商品展示类型", required = true ,dataType = "String",paramType = "query")})
     @ResponseBody
     @PostMapping("/findByName")
-    public String findByName(@RequestParam(value = "Name")String name,@RequestParam(value = "page")Integer page,@RequestParam(value = "num")Integer num) {
-        return JsonObject.toJson(goodService.selectByName("%"+name+"%",(page-1)*num,num));
+    public String findByName(@RequestParam(value = "shopId")Integer shopId,@RequestParam(value = "Name")String name,@RequestParam(value = "page")Integer page,@RequestParam(value = "num")Integer num) {
+        return JsonObject.toJson(goodService.selectByName(shopId,"%"+name+"%",(page-1)*num,num));
     }
 
 
@@ -116,8 +116,8 @@ public class GoodController {
             @ApiImplicitParam(name = "other", value = "商品展示类型", required = true ,dataType = "String",paramType = "query")})
     @ResponseBody
     @PostMapping("/findByRecommend")
-    public String findByRecommend(@RequestParam(value = "other")String other,@RequestParam(value = "page")Integer page,@RequestParam(value = "num")Integer num) {
-        return JsonObject.toJson(goodService.selectByOther(other,(page-1)*num,num));
+    public String findByRecommend(@RequestParam(value = "shopId")Integer shopId,@RequestParam(value = "other")String other,@RequestParam(value = "page")Integer page,@RequestParam(value = "num")Integer num) {
+        return JsonObject.toJson(goodService.selectByOther(shopId,other,(page-1)*num,num));
     }
 
     // add :  chan  2018/4/4
@@ -155,7 +155,7 @@ public class GoodController {
     public int add(@RequestParam(value = "image",required = false) MultipartFile image, @RequestParam(value = "name") String name,
                    @RequestParam(value = "introduce",required = false)  String introduce, @RequestParam(value = "content",required = false) String content,
                    @RequestParam(value = "price") double price, @RequestParam(value = "count") Integer count,
-                   @RequestParam(value = "category") Integer category,@RequestParam(value = "status") Integer status) {
+                   @RequestParam(value = "category") Integer category,@RequestParam(value = "status") Integer status,@RequestParam(value = "shopId") Integer shopId) {
         if(image==null) {
             return 0;
         }
@@ -166,6 +166,7 @@ public class GoodController {
         good.setContent(content);
         good.setIntroduce(introduce);
         good.setName(name);
+        good.setShopId(shopId);
         String url = new UploadImage().uploadImage(image,2,constant.getPath(),constant.getUrl());
         good.setImage(url);
         return goodService.insertSelective(good);
@@ -182,7 +183,7 @@ public class GoodController {
     public int update( @RequestParam(value = "id")Integer id,@RequestParam(value = "image",required = false) MultipartFile image, @RequestParam(value = "name") String name,
                       @RequestParam(value = "introduce",required = false)  String introduce,
                       @RequestParam(value = "price") double price, @RequestParam(value = "count") Integer count,
-                      @RequestParam(value = "category") Integer category,@RequestParam(value = "status") Integer status) {
+                      @RequestParam(value = "category") Integer category,@RequestParam(value = "status") Integer status,@RequestParam(value = "shopId") Integer shopId) {
         Good good = new Good();
         good.setId(id);
         good.setCategory(category);
@@ -190,6 +191,7 @@ public class GoodController {
         good.setCounts(count);
         good.setIntroduce(introduce);
         good.setName(name);
+        good.setShopId(shopId);
         if(image!=null) {
             String url = new UploadImage().uploadImage(image, 2, constant.getPath(), constant.getUrl());
             good.setImage(url);

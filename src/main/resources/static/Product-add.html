@@ -226,6 +226,7 @@
             formData.append('content', good_style)
             var c = $scope.good.selectedCategory;
             formData.append('category', c);
+            formData.append('shopId',getCookie("shopId")); // 2018-6-30
             $http({
                 method: 'POST',
                 url: '/good/add',
@@ -276,6 +277,5 @@
         }
         reader.readAsDataURL(file.files[0]);
     }
-
 </script>
 </html>

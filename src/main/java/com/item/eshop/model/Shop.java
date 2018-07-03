@@ -5,19 +5,11 @@ public class Shop {
     private String name;
     private String introduce;
     private String contact;
-    private int schoolId;
+    private int school_id;
     private int status;
     private String address;
-    private int userId;
+    private int user_id;
     private String image;
-
-    public String getImage() {
-        return image;
-    }
-
-    public void setImage(String image) {
-        this.image = image;
-    }
 
     public int getId() {
         return id;
@@ -51,12 +43,12 @@ public class Shop {
         this.contact = contact;
     }
 
-    public int getSchoolId() {
-        return schoolId;
+    public int getSchool_id() {
+        return school_id;
     }
 
-    public void setSchoolId(int schoolId) {
-        this.schoolId = schoolId;
+    public void setSchool_id(int school_id) {
+        this.school_id = school_id;
     }
 
     public int getStatus() {
@@ -75,11 +67,19 @@ public class Shop {
         this.address = address;
     }
 
-    public int getUserId() {
-        return userId;
+    public int getUser_id() {
+        return user_id;
     }
 
-    public void setUserId(int userId) {
-        this.userId = userId;
+    public void setUser_id(int user_id) {
+        this.user_id = user_id;
+    }
+
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
     }
 }

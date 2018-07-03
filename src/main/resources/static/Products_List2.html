@@ -299,6 +299,7 @@
     var p = 1;
     var data;
     var good_category;
+    var sId = getCookie("shopId");
     app.controller('goodCtrl', function ($scope, $http) {
         $scope.goodNum = total;
         $scope.getCategory = function () {
@@ -320,7 +321,7 @@
             $http({
                 method: 'POST',
                 url: '/good/findByStatus',
-                params: {status: 1, page: p, num: n}
+                params: {shopId:sId,status: 1, page: p, num: n}
             }).then(function successCallback(response) {
                 data = response.data;
                 $scope.goods = data;
@@ -341,7 +342,7 @@
                 $http({
                     method: 'POST',
                     url: '/good/findByStatus',
-                    params: {status: 1, page: pages, num: n}
+                    params: {shopId:sId,status: 1, page: pages, num: n}
                 }).then(function successCallback(response) {
                     data = response.data;
                     $scope.goods = response.data;
@@ -363,7 +364,7 @@
             $http({
                 method: 'POST',
                 url: '/good/updateStatus',
-                params: {id: index, status: 2}
+                params: {shopId:sId,id: index, status: 2}
             }).then(function successCallback(response) {
                 if (response.data == 1)
                     alert("下架成功");
@@ -412,7 +413,7 @@
             $http({
                 method: 'POST',
                 url: '/good/findByName',
-                params: {Name: $scope.trade_id, page: 1, num: 100}
+                params: {shopId:sId,Name: $scope.trade_id, page: 1, num: 100}
             }).then(function successCallback(response) {
                 data = response.data;
                 $scope.goods = data;

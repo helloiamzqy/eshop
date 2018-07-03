@@ -311,6 +311,7 @@
     var data;
     total = 10;
     var goodStatus = 10;
+    var sId = getCookie("shopId");
     app.controller('goodCtrl', function($scope,$http) {
         $scope.goodNum = total;
         $scope.getGood = function () {
@@ -318,7 +319,7 @@
             $http({
                 method: 'POST',
                 url: '/good/findByStatus',
-                params:{status:goodStatus,page:p,num:n}
+                params:{shopId:sId,status:goodStatus,page:p,num:n}
             }).then(function successCallback(response) {
                 data = response.data;
                 $scope.goods = data;
@@ -354,7 +355,7 @@
                 $http({
                     method: 'POST',
                     url: '/good/findByStatus',
-                    params:{status:goodStatus,page:pages,num:n}
+                    params:{shopId:sId,status:goodStatus,page:pages,num:n}
                 }).then(function successCallback(response) {
                     if(angular.isUndefined(response.data[0].id))
                         alert("无商品！");
@@ -392,7 +393,7 @@
             $http({
                 method: 'POST',
                 url: '/good/findByName',
-                params: {Name:$scope.trade_id,page:1,num:100}
+                params: {shopId:sId,Name:$scope.trade_id,page:1,num:100}
             }).then(function successCallback(response) {
                 data = response.data;
                 $scope.goods = data;

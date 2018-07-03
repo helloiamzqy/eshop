@@ -64,7 +64,7 @@ public class TradeController {
     @ResponseBody
     @Transactional
     @PostMapping("/add")
-    public String add(@RequestParam(value = "amount") double amount, @RequestParam(value = "coupon_id") Integer coupon_id, @RequestParam(value = "address_id") Integer address_id, HttpSession httpSession) {
+    public String add(@RequestParam("shopId")Integer shopId,@RequestParam(value = "amount") double amount, @RequestParam(value = "coupon_id") Integer coupon_id, @RequestParam(value = "address_id") Integer address_id, HttpSession httpSession) {
         int user_id = (int) httpSession.getAttribute("user_id");
         if (address_id == null) {
             return "5";
@@ -74,6 +74,7 @@ public class TradeController {
         t.setAmount(new BigDecimal(amount));
         t.setFactAmount(new BigDecimal(amount));
         t.setAddressId(address_id);
+        t.setShopId(shopId);
         if(coupon_id!=0){
             t.setCouponId(coupon_id+"");
         }
@@ -160,10 +161,10 @@ public class TradeController {
     })
     @ResponseBody
     @PostMapping("/findByStatusSet")
-    public String findByUserAndStatusArray(@RequestParam(value = "status")String status, HttpSession httpSession) {
+    public String findByUserAndStatusArray(@RequestParam(value = "shopId") Integer shopId,@RequestParam(value = "status")String status, HttpSession httpSession) {
         int user_id = (int) httpSession.getAttribute("user_id");
         System.out.println("array:::status:"+status.substring(1,status.length()-1));
-        List<Trade> trades =  tradeService.selectBySet(user_id,status.substring(1,status.length()-1));
+        List<Trade> trades =  tradeService.selectBySet(shopId,user_id,status.substring(1,status.length()-1));
         return JsonObject.toJson(trades);
     }
 
@@ -403,26 +404,26 @@ public class TradeController {
     // add :  chan  2018/4/4
     @ResponseBody
     @PostMapping("/findMore")
-    public String findMore(@RequestParam(value = "page") Integer page, @RequestParam(value = "num") Integer num) {
-        return JsonObject.toJson(tradeService.selectMore((page - 1) * num, num));
+    public String findMore(@RequestParam(value = "shopId") Integer shopId,@RequestParam(value = "page") Integer page, @RequestParam(value = "num") Integer num) {
+        return JsonObject.toJson(tradeService.selectMore(shopId,(page - 1) * num, num));
     }
 
     // add :  chan  2018/4/4
     @ResponseBody
     @PostMapping("/findByType")
-    public String findByType(@RequestParam(value = "status",required = false) Integer status, @RequestParam(value = "page") Integer page, @RequestParam(value = "num") Integer num) {
+    public String findByType(@RequestParam(value = "shopId") Integer shopId,@RequestParam(value = "status",required = false) Integer status, @RequestParam(value = "page") Integer page, @RequestParam(value = "num") Integer num) {
         if(status==null||status==10){
-            return JsonObject.toJson(tradeService.selectMore((page - 1) * num, num));
+            return JsonObject.toJson(tradeService.selectMore(shopId,(page - 1) * num, num));
         }
-        List<Trade> trade = tradeService.selectByStatus(status, (page - 1) * num, num);
+        List<Trade> trade = tradeService.selectByStatus(shopId,status, (page - 1) * num, num);
         return JsonObject.toJson(trade);
     }
 
     @ResponseBody
     @PostMapping("/findByTypes")
-    public String findByTypes(@RequestParam(value = "status",required = false) Integer status,@RequestParam(value = "status2",required = false) Integer status2, @RequestParam(value = "page") Integer page, @RequestParam(value = "num") Integer num) {
+    public String findByTypes(@RequestParam(value = "shopId") Integer shopId,@RequestParam(value = "status",required = false) Integer status,@RequestParam(value = "status2",required = false) Integer status2, @RequestParam(value = "page") Integer page, @RequestParam(value = "num") Integer num) {
         String set =""+status+","+status2+")";
-        List<Trade> trade = tradeService.selectBySets(set,(page-1)*num,num);
+        List<Trade> trade = tradeService.selectBySets(shopId,set,(page-1)*num,num);
         return JsonObject.toJson(trade);
     }
 }
